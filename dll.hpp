@@ -5,7 +5,7 @@
 #include <windows.h>
 namespace cov {
 	class dll final {
-		void* m_handle=nullptr;
+		HMODULE m_handle=nullptr;
 	public:
 		dll()=default;
 		dll(const dll&)=delete;
@@ -35,7 +35,7 @@ namespace cov {
 		{
 			if(m_handle==nullptr)
 				throw std::logic_error("Used an unopened file.");
-			return ::GetProcAddress(m_handle,method.c_str());
+			return reinterpret_cast<void*>(::GetProcAddress(m_handle,method.c_str()));
 		}
 	};
 }
