@@ -1,9 +1,27 @@
 #pragma once
-
+/*
+* Cross-platform DLL library
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*
+* Copyright (C) 2018 Michael Lee(李登淳)
+* Email: mikecovlee@163.com
+* Github: https://github.com/mikecovlee
+*/
 #include <stdexcept>
 #include <string>
 
-#if defined(__WIN32__) || defined(WIN32)
+#if defined(_WIN32) || defined(WIN32)
 
 #include <windows.h>
 
@@ -39,7 +57,8 @@ namespace cov {
 			if (m_handle == nullptr) {
 				static char szBuf[128];
 				const char *args[] = {path.c_str()};
-				::FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ARGUMENT_ARRAY, nullptr, ::GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR)&szBuf, 128, (va_list *)args);
+				::FormatMessage(FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_ARGUMENT_ARRAY, nullptr, ::GetLastError(),
+				                MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPTSTR) &szBuf, 128, (va_list *) args);
 				throw std::logic_error(szBuf);
 			}
 		}
